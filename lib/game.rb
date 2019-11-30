@@ -4,7 +4,6 @@ class Game
 
     def initialize
         @pieces = set_up_board
-
     end
 
     def set_up_board
@@ -38,9 +37,22 @@ class Game
                 lines[3] += "_______|"
                 col += 1
             end
+            lines[2] += "  #{("a".."z").to_a[row]}"
             lines.each {|l| puts l}
             row += 1
         end
-        4.times {puts ""}
+        puts ""
+        puts "    1       2       3       4       5       6       7       8"
+        3.times {puts ""}
     end
+
+    def next_turn
+        puts "Select a piece (format: A1 - H8)"
+        puts "only select a Knight (denoted by an 'n' or 'N' on the board)"
+        puts ""
+        selection = gets.chomp
+        3.times {puts ""}
+    end
+
+
 end
