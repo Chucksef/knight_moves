@@ -14,7 +14,7 @@ class Knight
         relative_moves = [[1,2], [2,1], [2,-1], [1,-2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
         new_positions = []
         relative_moves.each do |move|
-            new_positions << [ move[0]+current_x, move[1]+current_y]
+            new_positions << [ move[0]+current_x, move[1]+current_y] unless move[0]+current_x < 0 || move[0]+current_x > 7 || move[1]+current_y < 0 || move[1]+current_y > 7
         end
         new_positions.each do |x|
             puts "#{x}"
