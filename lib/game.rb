@@ -1,6 +1,7 @@
 class Game
-    require_relative 'space'
     attr_accessor :pieces
+    require_relative 'node'
+    require_relative 'knight'
 
     def initialize
         @pieces = set_up_board
@@ -8,13 +9,9 @@ class Game
 
     def set_up_board
         spaces = []
-        spaces << ["R", "N", "B", "Q", "K", "B", "N", "R"]
-        spaces << ["P", "P", "P", "P", "P", "P", "P", "P"]
-        4.times do
+        8.times do
             spaces << Array.new(8) {" "}
         end
-        spaces << ["p", "p", "p", "p", "p", "p", "p", "p"]
-        spaces << ["r", "n", "b", "q", "k", "b", "n", "r"]
         spaces
     end
 
@@ -52,8 +49,17 @@ class Game
         3.times {puts ""}
         puts "Now set the ending point for where you want the knight to go."
         ending = gets.chomp
-        Knight.new(start, ending)
+        kn = Knight.new(start)
+        puts "adding piece"
+        add_piece(kn)
+        kn.get_moves
         
+    end
+
+    def add_piece(piece)
+        puts "piece coords: #{piece.pos.coords}"
+        @pieces[piece.pos.coords[1]][piece.pos.coords[0]] = piece.symbol
+        print_board
     end
 
 

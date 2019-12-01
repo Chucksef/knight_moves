@@ -1,17 +1,33 @@
 class Knight
-    require_relative 'space'
-    attr_accessor :pos, :goal
+    attr_accessor :pos, :symbol
+    require_relative 'node'
 
-    def initialize(start, finish)
-        @pos = coords(start)
-        @goal = coords(finish)
-        puts "#{@pos}"
+    def initialize(position)
+        @pos = Node.new(coords(position))
+        @symbol = "H"
+    end
+
+    def get_moves(n = @pos)
+        current_x = @pos.col
+        current_y = @pos.row
+
+        relative_moves = [[1,2], [2,1], [2,-1], [1,-2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
+        new_positions = []
+        relative_moves.each do |move|
+            new_positions << [ move[0]+current_x, move[1]+current_y]
+        end
+        new_positions.each do |x|
+            puts "#{x}"
+        end
+        
+    end
+
+    def get_path(n = @pos)
     end
 
     private
 
     def coords(string)
-
         col = [string[0].upcase]
         row = [string[1].to_i]
         
@@ -22,7 +38,6 @@ class Knight
         coords_y = row.map { |r| rows.index(r) }
 
         return [coords_x[0], coords_y[0]]
-
     end
 
 end
