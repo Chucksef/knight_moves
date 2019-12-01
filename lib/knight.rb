@@ -5,6 +5,7 @@ class Knight
     def initialize(position)
         @pos = Node.new(coords(position))
         @symbol = "H"
+        get_moves
     end
 
     def get_moves(n = @pos)
@@ -17,9 +18,8 @@ class Knight
             new_positions << [ move[0]+current_x, move[1]+current_y] unless move[0]+current_x < 0 || move[0]+current_x > 7 || move[1]+current_y < 0 || move[1]+current_y > 7
         end
         new_positions.each do |x|
-            puts "#{x}"
+            n.moves << x
         end
-        
     end
 
     def get_path(n = @pos)

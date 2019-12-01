@@ -42,25 +42,38 @@ class Game
         3.times {puts ""}
     end
 
-    def spawn_horse
+    def spawn_knight
         puts "Set the starting location for a hypothetical knight (format: A1 - H8)"
         puts ""
         start = gets.chomp
         3.times {puts ""}
         kn = Knight.new(start)
         puts "adding piece"
+
         add_piece(kn)
-        kn.get_moves
+        add_targets(kn)
+
+        puts ""
         puts "Now set the ending point for where you want the knight to go."
         ending = gets.chomp
         
     end
 
     def add_piece(piece)
-        puts "piece coords: #{piece.pos.coords}"
         @pieces[piece.pos.coords[1]][piece.pos.coords[0]] = piece.symbol
         print_board
     end
+
+    def add_targets(piece)
+        #shows valid movement locations for a piece
+
+        valid_spaces = piece.pos.moves
+        valid_spaces.each do |x|
+            @pieces[x[1]][x[0]] = "O"
+        end
+        print_board
+    end
+
 
 
 end
