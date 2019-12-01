@@ -42,17 +42,17 @@ class Game
         3.times {puts ""}
     end
 
-    def next_turn
+    def spawn_horse
         puts "Set the starting location for a hypothetical knight (format: A1 - H8)"
         puts ""
         start = gets.chomp
         3.times {puts ""}
-        puts "Now set the ending point for where you want the knight to go."
-        ending = gets.chomp
         kn = Knight.new(start)
         puts "adding piece"
         add_piece(kn)
         kn.get_moves
+        puts "Now set the ending point for where you want the knight to go."
+        ending = gets.chomp
         
     end
 
