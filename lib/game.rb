@@ -24,6 +24,7 @@ class Game
         puts ""
         puts "                        CHESS OR WHATEVER"
         puts ""
+        puts "    A       B       C       D       E       F       G       H"
         8.times {head += " _______"}
         puts head
         row = 0
@@ -37,21 +38,22 @@ class Game
                 lines[3] += "_______|"
                 col += 1
             end
-            lines[2] += "  #{("a".."z").to_a[row]}"
+            lines[2] += "  #{(1..8).to_a[row]}"
             lines.each {|l| puts l}
             row += 1
         end
-        puts ""
-        puts "    1       2       3       4       5       6       7       8"
         3.times {puts ""}
     end
 
     def next_turn
-        puts "Select a piece (format: A1 - H8)"
-        puts "only select a Knight (denoted by an 'n' or 'N' on the board)"
+        puts "Set the starting location for a hypothetical knight (format: A1 - H8)"
         puts ""
-        selection = gets.chomp
+        start = gets.chomp
         3.times {puts ""}
+        puts "Now set the ending point for where you want the knight to go."
+        ending = gets.chomp
+        Knight.new(start, ending)
+        
     end
 
 
