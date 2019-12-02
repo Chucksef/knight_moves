@@ -1,43 +1,67 @@
 class Knight
-    attr_accessor :pos, :symbol
-    require_relative 'node'
-
-    def initialize(position)
-        @pos = Node.new(coords(position))
+    attr_accessor :position, :moves, :symbol
+    require_relative 'knight_move'
+    
+    def initialize(pos)
+        @position = get_coords(pos)
         @symbol = "H"
         get_moves
     end
-
-    def get_moves(n = @pos)
-        current_x = @pos.col
-        current_y = @pos.row
-
-        relative_moves = [[1,2], [2,1], [2,-1], [1,-2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
-        new_positions = []
-        relative_moves.each do |move|
-            new_positions << [ move[0]+current_x, move[1]+current_y] unless move[0]+current_x < 0 || move[0]+current_x > 7 || move[1]+current_y < 0 || move[1]+current_y > 7
+    
+    def get_path(end_string)
+        start_coords = @position
+        end_coords = get_coords(end_string)
+        
+        current_node = build_move_tree(start_coords, end_coords)
+        
+        path = []
+        until current_node.position == start_coords
+            path << current_node.position
+            current_node = current_node.parent
         end
-        new_positions.each do |x|
-            n.moves << x
-        end
+        path << current_node.position
     end
-
-    def get_path(n = @pos)
-    end
-
+    
     private
-
-    def coords(string)
+    
+    def build_move_tree(start, goal)
+        current_node = self
+        queue = [current_node]
+        until current_node.position == goal #should I set up initialized knight with one move: stay still?
+            current_node.moves.each do |move| 
+                queue << Knight_Move.new(move, current_node)
+            end
+            queue.shift
+            current_node = queue[0]
+        end
+        current_node
+    end
+    
+    def get_moves
+        rel_moves = [[1,2], [2,1], [2,-1], [1,-2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
+    
+        @moves = rel_moves.select do |move|
+            move[0] += @position[0]
+            move[1] += @position[1]
+            valid_move?(move)
+        end
+    end
+        
+    def valid_move?(move)
+        move.all? { |element| element >= 0 && element <= 7 }
+    end
+    
+    def get_coords(string)
         col = [string[0].upcase]
         row = [string[1].to_i]
         
         cols = ("A".."H").to_a
         rows = (1..8).to_a
-
+        
         coords_x = col.map { |c| cols.index(c) }
         coords_y = row.map { |r| rows.index(r) }
-
+        
         return [coords_x[0], coords_y[0]]
     end
-
+    
 end
